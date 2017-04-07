@@ -6,7 +6,7 @@ var targetNumber = 0;
 
   // We begin by expanding our array to include four options.
   var numberOptions = [12,8,3,2,9,11,6,1,7,10,5,4];
-
+var imageCrystal=0;
 
 
 function targetRand(){ // between 19 - 120.
@@ -34,10 +34,17 @@ function shuffle(array) {
   return array;
 }
 
-function reset(){
+function reset(array){
   targetRand();
   counter = 0;
   $("#total").text(counter);
+  
+}
+
+function attribute(array){
+  for (var i = 0; i < 4; i++) {
+    imageCrystal.attr("data-crystalvalue", array[i]);
+  }
 }
 // }
 targetRand();
@@ -45,7 +52,7 @@ targetRand();
   for (var i = 0; i < 4; i++) {
 
     // For each iteration, we will create an imageCrystal
-    var imageCrystal = $("<img>");
+    imageCrystal = $("<img>");
 
     // First each crystal will be given the class ".crystal-image".
     // This will allow the CSS to take effect.
@@ -91,11 +98,14 @@ $("#total").text(counter);
       alert("You win!");
       numberOptions= shuffle(numberOptions);
       alert(numberOptions);
+      reset(numberOptions);
     }
 
     else if (counter >= targetNumber) {
       alert("You lose!!");
       numberOptions= shuffle(numberOptions);
+      alert(numberOptions);
+      reset(numberOptions);
     }
 
   });
