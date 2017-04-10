@@ -6,7 +6,9 @@ var targetNumber = 0;
 
   // We begin by expanding our array to include four options.
   var numberOptions = [12,8,3,2,9,11,6,1,7,10,5,4];
-var imageCrystal=0;
+var imageCrystal=[];
+
+var images= ["./assets/images/0.jpg", "./assets/images/1.jpg", "./assets/images/2.jpg", "./assets/images/3.jpg"]
 
 
 function targetRand(){ // between 19 - 120.
@@ -38,43 +40,44 @@ function reset(array){
   targetRand();
   counter = 0;
   $("#total").text(counter);
+ 
   
 }
 
 function attribute(array){
   for (var i = 0; i < 4; i++) {
-    imageCrystal.attr("data-crystalvalue", array[i]);
-  }
+
+imageCrystal[i].attr("data-crystalvalue", numberOptions[i]);
+ $("#crystals").append(imageCrystal[i]);
+ }
 }
 // }
 targetRand();
   // Next we create a for loop to create crystals for every numberOption.
+
+
   for (var i = 0; i < 4; i++) {
 
     // For each iteration, we will create an imageCrystal
-    imageCrystal = $("<img>");
+    imageCrystal[i] = $("<img>");
 
     // First each crystal will be given the class ".crystal-image".
     // This will allow the CSS to take effect.
-    imageCrystal.addClass("crystal-image");
+    imageCrystal[i].addClass("crystal-image");
 
     // Each imageCrystal will be given a src link to the crystal image
-    if (i===0){
-    imageCrystal.attr("src", "./assets/images/0.jpg");
-  }else if (i===1){
-    imageCrystal.attr("src", "./assets/images/1.jpg");
-  }else if (i===2){
-    imageCrystal.attr("src", "./assets/images/2.jpg");
-  }else if (i===3){
-    imageCrystal.attr("src", "./assets/images/3.jpg");
-  }
+
+    imageCrystal[i].attr("src", images[i]);
+ 
 
     // Each imageCrystal will be given a data attribute called data-crystalValue.
     // This data attribute will be set equal to the array value.
-    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+    
+
+    imageCrystal[i].attr("data-crystalvalue", numberOptions[i]);
 
     // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
-    $("#crystals").append(imageCrystal);
+    $("#crystals").append(imageCrystal[i]);
   }
 
   // This time, our click event applies to every single crystal on the page. Not just one.
@@ -96,16 +99,22 @@ $("#total").text(counter);
 
     if (counter === targetNumber) {
       alert("You win!");
-      numberOptions= shuffle(numberOptions);
-      alert(numberOptions);
+      
+     
       reset(numberOptions);
+      numberOptions= shuffle(numberOptions);
+     attribute(numberOptions);
+  
     }
 
     else if (counter >= targetNumber) {
       alert("You lose!!");
-      numberOptions= shuffle(numberOptions);
-      alert(numberOptions);
+    
+   
       reset(numberOptions);
+      numberOptions= shuffle(numberOptions);
+      attribute(numberOptions);
+   
     }
 
   });
